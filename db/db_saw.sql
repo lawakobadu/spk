@@ -21,14 +21,11 @@ CREATE TABLE IF NOT EXISTS `saw_alternatives` (
 -- Dumping data for table db_dss.saw_alternatives: 8 rows
 /*!40000 ALTER TABLE `saw_alternatives` DISABLE KEYS */;
 INSERT INTO `saw_alternatives` (`id_alternative`, `name`) VALUES
-	(1, 'Ricky Martin Ginting'),
-	(2, 'Robertus Rinaldi Pakpahan'),
-	(3, 'Samuel Sitorus'),
-	(4, 'Aprius Laia'),
-	(5, 'Elisa Priska Nainggolan'),
-	(6, 'Damayanti Simamora'),
-	(7, 'Ely Candra'),
-	(8, 'Lasdina Sihotang');
+	(1, 'Dosen 1'),
+	(2, 'Dosen 2'),
+	(3, 'Dosen 3'),
+	(4, 'Dosen 4'),
+	(5, 'Dosen 5');
 /*!40000 ALTER TABLE `saw_alternatives` ENABLE KEYS */;
 
 -- Dumping structure for table db_dss.saw_criterias
@@ -43,54 +40,61 @@ CREATE TABLE IF NOT EXISTS `saw_criterias` (
 -- Dumping data for table db_dss.saw_criterias: 5 rows
 /*!40000 ALTER TABLE `saw_criterias` DISABLE KEYS */;
 INSERT INTO `saw_criterias` (`id_criteria`, `criteria`, `weight`, `attribute`) VALUES
-	(1, 'Penguasaan Aspek Teknis', 2.5, 'benefit'),
-	(2, 'Pengalaman Kerja', 2.8, 'benefit'),
-	(3, 'Interpersonal Skill', 1.5, 'benefit'),
-	(4, 'Usia', 2, 'cost'),
-	(5, 'Staus Perkawainan', 2.8, 'cost');
+	(1, 'Penilaian mahasiswa', 3, 'benefit'),
+	(2, 'Kualifikasi pendidikan', 4, 'benefit'),
+	(3, 'Jumlah penelitian', 5, 'benefit'),
+	(4, 'Publikasi artikel di jurnal', 5, 'benefit'),
+	(5, 'Jumlah pelatihan dan atau seminar', 3, 'benefit'),
+	(6, 'Jumlah pengabdian masyarakat', 4, 'benefit'),
+	(7, 'Jabatan akademik dosen', 4, 'benefit');
 /*!40000 ALTER TABLE `saw_criterias` ENABLE KEYS */;
 
 -- Dumping structure for table db_dss.saw_evaluations
 CREATE TABLE IF NOT EXISTS `saw_evaluations` (
   `id_alternative` smallint(5) unsigned NOT NULL,
   `id_criteria` tinyint(3) unsigned NOT NULL,
-  `value` float NOT NULL,
+  `value` varchar(100) NOT NULL,
   PRIMARY KEY (`id_alternative`,`id_criteria`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Dumping data for table db_dss.saw_evaluations: 30 rows
 /*!40000 ALTER TABLE `saw_evaluations` DISABLE KEYS */;
 INSERT INTO `saw_evaluations` (`id_alternative`, `id_criteria`, `value`) VALUES
-	(1, 1, 8),
-	(1, 2, 2),
-	(1, 3, 7.5),
-	(1, 4, 36),
-	(1, 5, 5),
-	(2, 1, 7.5),
-	(2, 2, 1.5),
-	(2, 3, 7.5),
-	(2, 4, 43),
-	(2, 5, 8),
-	(3, 1, 7),
-	(3, 2, 3.5),
-	(3, 3, 6.5),
-	(3, 4, 43),
-	(3, 5, 10),
-	(4, 1, 7.5),
-	(4, 2, 0.5),
-	(4, 3, 8.5),
-	(4, 4, 30),
-	(4, 5, 10),
-	(5, 1, 8),
-	(5, 2, 6.5),
-	(5, 3, 8.5),
-	(5, 4, 37),
-	(5, 5, 8),
-	(6, 2, 2),
-	(6, 1, 6),
-	(6, 3, 9.5),
-	(6, 4, 18),
-	(6, 5, 1);
+	(1, 1, '88'),
+	(1, 2, 'S2'),
+	(1, 3, '3'),
+	(1, 4, '1 Jurnal Internasional'),
+	(1, 5, '2'),
+	(1, 6, '4'),
+	(1, 7, 'Asisten Ahli'),
+	(2, 1, '92'),
+	(2, 2, 'S3'),
+	(2, 3, '1'),
+	(2, 4, '3 Jurnal Nasional'),
+	(2, 5, '1'),
+	(2, 6, '3'),
+	(2, 7, 'Lektor Kepala'),
+	(3, 1, '80'),
+	(3, 2, 'S2'),
+	(3, 3, '2'),
+	(3, 4, '1 Jurnal Nasional Terakreditas'),
+	(3, 5, '2'),
+	(3, 6, '5'),
+	(3, 7, 'Lektor'),
+	(4, 1, '73'),
+	(4, 2, 'S2'),
+	(4, 3, '2'),
+	(4, 4, '2 Jurnal Lokal'),
+	(4, 5, '3'),
+	(4, 6, '1'),
+	(4, 7, 'Asisten Ahli'),
+	(5, 1, '65'),
+	(5, 2, 'S3'),
+	(5, 3, '4'),
+	(5, 4, '1 Jurnal Internasional'),
+	(5, 5, '5'),
+	(5, 6, '2'),
+	(5, 7, 'Guru Besar');
 /*!40000 ALTER TABLE `saw_evaluations` ENABLE KEYS */;
 
 -- Dumping structure for table db_dss.saw_users

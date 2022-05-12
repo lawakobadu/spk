@@ -44,14 +44,16 @@ Rij = ( Xij/max{Xij} )</p>
     </caption>
     <tr>
         <th rowspan='2'>Alternatif</th>
-        <th colspan='6'>Kriteria</th>
+        <th colspan='7'>Kriteria</th>
     </tr>
     <tr>
         <th>C1</th>
         <th>C2</th>
         <th>C3</th>
         <th>C4</th>
-        <th colspan="2">C5</th>
+        <th>C5</th>
+        <th>C6</th>
+        <th colspan="2">C7</th>
     </tr>
     <?php
 $sql = "SELECT
@@ -61,20 +63,24 @@ $sql = "SELECT
           SUM(IF(a.id_criteria=2,a.value,0)) AS C2,
           SUM(IF(a.id_criteria=3,a.value,0)) AS C3,
           SUM(IF(a.id_criteria=4,a.value,0)) AS C4,
-          SUM(IF(a.id_criteria=5,a.value,0)) AS C5
+          SUM(IF(a.id_criteria=5,a.value,0)) AS C5,
+          SUM(IF(a.id_criteria=6,a.value,0)) AS C6,
+          SUM(IF(a.id_criteria=7,a.value,0)) AS C7
         FROM
           saw_evaluations a
           JOIN saw_alternatives b USING(id_alternative)
         GROUP BY a.id_alternative
         ORDER BY a.id_alternative";
 $result = $db->query($sql);
-$X = array(1 => array(), 2 => array(), 3 => array(), 4 => array(), 5 => array());
+$X = array(1 => array(), 2 => array(), 3 => array(), 4 => array(), 5 => array(), 6 => array(), 7 => array());
 while ($row = $result->fetch_object()) {
     array_push($X[1], round($row->C1, 2));
     array_push($X[2], round($row->C2, 2));
     array_push($X[3], round($row->C3, 2));
     array_push($X[4], round($row->C4, 2));
     array_push($X[5], round($row->C5, 2));
+    array_push($X[6], round($row->C6, 2));
+    array_push($X[7], round($row->C7, 2));
     echo "<tr class='center'>
             <th>A<sub>{$row->id_alternative}</sub> {$row->name}</th>
             <td>" . round($row->C1, 2) . "</td>
@@ -82,6 +88,8 @@ while ($row = $result->fetch_object()) {
             <td>" . round($row->C3, 2) . "</td>
             <td>" . round($row->C4, 2) . "</td>
             <td>" . round($row->C5, 2) . "</td>
+            <td>" . round($row->C6, 2) . "</td>
+            <td>" . round($row->C7, 2) . "</td>
             <td>
             <a href='keputusan-hapus.php?id={$row->id_alternative}' class='btn btn-danger btn-sm'>Hapus</a>
             </td>
@@ -98,7 +106,7 @@ $result->free();
     </caption>
     <tr>
         <th rowspan='2'>Alternatif</th>
-        <th colspan='5'>Kriteria</th>
+        <th colspan='7'>Kriteria</th>
     </tr>
     <tr>
         <th>C1</th>
@@ -106,6 +114,8 @@ $result->free();
         <th>C3</th>
         <th>C4</th>
         <th>C5</th>
+        <th>C6</th>
+        <th>C7</th>
     </tr>
     <?php
 $sql = "SELECT
@@ -154,7 +164,25 @@ $sql = "SELECT
                 a.value/" . max($X[5]) . ",
                 " . min($X[5]) . "/a.value)
                ,0)
-             ) AS C5
+             ) AS C5,
+          SUM(
+            IF(
+              a.id_criteria=6,
+              IF(
+                b.attribute='benefit',
+                a.value/" . max($X[6]) . ",
+                " . min($X[6]) . "/a.value)
+                ,0)
+            ) AS C6,
+          SUM(
+            IF(
+              a.id_criteria=7,
+              IF(
+                b.attribute='benefit',
+                a.value/" . max($X[7]) . ",
+                " . min($X[7]) . "/a.value)
+                ,0)
+            ) AS C7
         FROM
           saw_evaluations a
           JOIN saw_criterias b USING(id_criteria)
@@ -164,7 +192,7 @@ $sql = "SELECT
 $result = $db->query($sql);
 $R = array();
 while ($row = $result->fetch_object()) {
-    $R[$row->id_alternative] = array($row->C1, $row->C2, $row->C3, $row->C4, $row->C5);
+    $R[$row->id_alternative] = array($row->C1, $row->C2, $row->C3, $row->C4, $row->C5, $row->C6, $row->C7);
     echo "<tr class='center'>
             <th>A{$row->id_alternative}</th>
             <td>" . round($row->C1, 2) . "</td>
@@ -172,6 +200,8 @@ while ($row = $result->fetch_object()) {
             <td>" . round($row->C3, 2) . "</td>
             <td>" . round($row->C4, 2) . "</td>
             <td>" . round($row->C5, 2) . "</td>
+            <td>" . round($row->C6, 2) . "</td>
+            <td>" . round($row->C7, 2) . "</td>
           </tr>\n";
 }
 ?>
@@ -191,7 +221,7 @@ while ($row = $result->fetch_object()) {
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel33">Isi Nilai Kandidat </h4>
+                        <h4 class="modal-title" id="myModalLabel33">Isi Nilai Dosen</h4>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <i data-feather="x"></i>
                         </button>
@@ -216,7 +246,7 @@ $result->free();
                         <div class="modal-body">
                             <label>Criteria: </label>
                             <div class="form-group">
-                            <select class="form-control form-select" name="id_criteria">
+                            <select class="form-control form-select" name="id_criteria" id="id_criteria" onchange="changeInput()">
                             <?php
 $sql = 'SELECT * FROM saw_criterias';
 $result = $db->query($sql);
@@ -227,6 +257,18 @@ while ($row = $result->fetch_object()) {
 $result->free();
 ?>
                                           </select>
+                            </div>
+                        </div>
+                        <div class="modal-body jenis_jurnal">
+                            <label>Jenis Jurnal: </label>
+                            <div class="form-group">
+                            <select class="form-control form-select">
+                              <option value="Jurnal Internasional Terakreditasi">Jurnal Internasional Terakreditasi</option>
+                              <option value="Jurnal Nasional Terakreditasi">Jurnal Nasional Terakreditasi</option>
+                              <option value="Jurnal Internasional">Jurnal Internasional</option>
+                              <option value="Jurnal Nasional">Jurnal Nasional</option>
+                              <option value="Jurnal Lokal">Jurnal Lokal</option>
+                            </select>
                             </div>
                         </div>
                         <div class="modal-body">
@@ -255,3 +297,14 @@ $result->free();
   </body>
 
 </html>
+
+<script>
+  function changeInput() {
+    var criteria = document.getElementById("id_criteria");
+    if(criteria.value == '3'){
+      document.getElementsByClassName("jenis_jurnal").style.visibility = "visible";
+    }else{
+      document.getElementsByClassName("jenis_jurnal").style.visibility = "hidden";
+    }
+}
+</script>

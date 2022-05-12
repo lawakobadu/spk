@@ -28,7 +28,7 @@ require "include/conn.php";
                                 <div class="card-content">
                                     <div class="card-body">
                                         <p class="card-text">
-                                            Data-data mengenai kandidat yang akan dievaluasi di representasikan dalam
+                                            Data-data mengenai dosen yang akan dievaluasi di representasikan dalam
                                             tabel berikut:
                                         </p>
                                     </div>
@@ -97,7 +97,7 @@ $result->free();
                         <div class="modal-body">
                             <label>Name: </label>
                             <div class="form-group">
-                                <input type="text" name="name" placeholder="Nama Kandidat..." class="form-control"
+                                <input type="text" name="name" placeholder="Nama Dosen..." class="form-control"
                                     required>
                             </div>
                         </div>

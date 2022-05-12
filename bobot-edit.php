@@ -38,8 +38,14 @@ $row = $result->fetch_array();
                                         <input type="text" class="form-control" name="criteria" value="<?=$row['criteria'];?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="basicInput">Weight</label>
-                                        <input type="text" class="form-control" name="weight" value="<?=$row['weight'];?>">
+                                        <label for="basicInput">Bobot</label>
+                                        <select class="form-select" aria-label="Default select example" name="weight">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="3">5</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="basicInput">Attribute</label>

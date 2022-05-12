@@ -19,7 +19,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Sistem Pendukung Keputusan Manajer IT Terbaik</h4>
+                                    <h4>SISTEM PENUNJANG KEPUTUSAN DALAM MENENTUKAN DOSEN TERBAIK MENGGUNAKAN METODE SIMPLE ADDITIVE WEIGHTING DI UNIVERSITAS XYZ</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
